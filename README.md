@@ -13,7 +13,7 @@ The NexusMap platform features a bespoke **Luxury Editorial Cream & Champagne Go
 ### 1. 📊 Executive Dashboard & WebGL Network Canvas
 *Interactive WebGL force-directed graph canvas rendering 307 nodes with 1st, 2nd, and 3rd degree connection stats.*
 
-![NexusMap Executive Dashboard & WebGL Network Canvas](./public/screenshots/dashboard.png)
+![NexusMap Executive Dashboard & WebGL Network Canvas](./public/screenshots/Screenshot%202026-08-05%20180805.png)
 
 ---
 
