@@ -8,36 +8,66 @@
 
 ## 🎨 Graph Data Model Schema (CognoDB openCypher)
 
-NexusMap models professional networks as an interconnected graph with **307 Nodes** and **1,420 Relationships**:
+NexusMap models professional networks as an interconnected graph with **307 Nodes** and **1,420 Relationships** across 4 distinct enterprise domains:
 
 ```mermaid
-graph TD
-    classDef personNode fill:#8b5cf6,stroke:#a78bfa,stroke-width:2px,color:#fff;
-    classDef companyNode fill:#10b981,stroke:#34d399,stroke-width:2px,color:#fff;
-    classDef skillNode fill:#f43f5e,stroke:#fb7185,stroke-width:2px,color:#fff;
-    classDef univNode fill:#f59e0b,stroke:#fbbf24,stroke-width:2px,color:#fff;
-    classDef locNode fill:#00d2ff,stroke:#38bdf8,stroke-width:2px,color:#000;
-    classDef indNode fill:#64748b,stroke:#94a3b8,stroke-width:2px,color:#fff;
-    classDef eventNode fill:#334155,stroke:#475569,stroke-width:2px,color:#fff;
+flowchart LR
+    subgraph CoreNetwork["👥 People & Connections Domain"]
+        direction TB
+        P1["<b>Person (Root Node)</b><br/><i>isRoot: true</i>"]
+        P2["<b>Peer Executive Node</b><br/><i>id, name, title</i>"]
+        P1 -- "<b>KNOWS</b><br/>{strength: 1..10, since, source}" --> P2
+    end
 
-    P1[Person : Node]:::personNode
-    P2[Person : Node]:::personNode
-    C[Company : Node]:::companyNode
-    S[Skill : Node]:::skillNode
-    U[University : Node]:::univNode
-    L[Location : Node]:::locNode
-    I[Industry : Node]:::indNode
-    E[Event : Node]:::eventNode
+    subgraph CorporateDomain["💼 Enterprise & Industry Domain"]
+        direction TB
+        C["<b>Company Node</b><br/><i>id, name, domain</i>"]
+        I["<b>Industry Node</b><br/><i>id, name</i>"]
+        C -- "<b>IN_INDUSTRY</b>" --> I
+    end
 
-    P1 -- "KNOWS {strength, since, source}" --> P2
-    P1 -- "WORKED_AT {role, isCurrent}" --> C
-    P1 -- "HAS_SKILL {proficiency}" --> S
-    P1 -- "STUDIED_AT {degree, field}" --> U
-    P1 -- "LOCATED_IN" --> L
-    P1 -- "ATTENDED" --> E
-    C -- "IN_INDUSTRY" --> I
-    C -- "LOCATED_IN" --> L
+    subgraph CompetencyDomain["⚡ Expertise & Skills Domain"]
+        S["<b>Skill Node</b><br/><i>id, name, category</i>"]
+    end
+
+    subgraph ContextDomain["📍 Location & Academia Domain"]
+        direction TB
+        U["<b>University Node</b>"]
+        L["<b>Location Node</b>"]
+        E["<b>Event Node</b>"]
+    end
+
+    P1 -- "<b>WORKED_AT</b> {role, isCurrent}" --> C
+    P1 -- "<b>HAS_SKILL</b> {proficiency}" --> S
+    P1 -- "<b>STUDIED_AT</b> {degree, field}" --> U
+    P1 -- "<b>LOCATED_IN</b>" --> L
+    P1 -- "<b>ATTENDED</b>" --> E
+    C -- "<b>LOCATED_IN</b>" --> L
+
+    classDef core fill:#1A1815,stroke:#D4AF37,stroke-width:2px,color:#E5C158;
+    classDef company fill:#0D8A58,stroke:#34D399,stroke-width:2px,color:#FFFFFF;
+    classDef skill fill:#7C3AED,stroke:#A78BFA,stroke-width:2px,color:#FFFFFF;
+    classDef academia fill:#C59B27,stroke:#FBBF24,stroke-width:2px,color:#FFFFFF;
+    classDef location fill:#1E293B,stroke:#94A3B8,stroke-width:2px,color:#FFFFFF;
+
+    class P1,P2 core;
+    class C,I company;
+    class S skill;
+    class U,E academia;
+    class L location;
 ```
+
+### 📋 Graph Data Dictionary & Cardinality
+
+| Node Label | Count | Primary Key | Key Attributes | Edge Relationships |
+|------------|-------|-------------|----------------|--------------------|
+| **`Person`** | 150 | `id` | `name`, `title`, `email`, `bio`, `isRoot` | `KNOWS`, `WORKED_AT`, `HAS_SKILL`, `STUDIED_AT`, `LOCATED_IN`, `ATTENDED` |
+| **`Company`** | 40 | `id` | `name`, `domain`, `headquarters` | `IN_INDUSTRY`, `LOCATED_IN` |
+| **`Skill`** | 50 | `id` | `name`, `category` | Target of `HAS_SKILL` |
+| **`University`** | 20 | `id` | `name`, `country` | Target of `STUDIED_AT` |
+| **`Location`** | 15 | `id` | `name`, `region` | Target of `LOCATED_IN` |
+| **`Industry`** | 12 | `id` | `name` | Target of `IN_INDUSTRY` |
+| **`Event`** | 20 | `id` | `name`, `year` | Target of `ATTENDED` |
 
 ---
 
