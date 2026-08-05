@@ -3,28 +3,28 @@ import Navbar from '@/components/ui/Navbar.jsx';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx';
 
 export const metadata = {
-  title: 'NexusMap — Professional Network Intelligence',
+  title: 'NexusMap — Executive Network Intelligence',
   description:
-    'Discover warm introduction paths, explore company networks, and navigate your professional relationships with CognoDB graph intelligence.',
+    'Discover warm introduction paths, explore executive company networks, and navigate multi-dimensional relationships powered by CognoDB graph intelligence.',
   keywords: ['Graph Database', 'CognoDB', 'Network Intelligence', 'Warm Introduction Path', 'Next.js 15'],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col antialiased">
+    <html lang="en">
+      <body className="bg-[#FAF7F2] text-[#1A1815] min-h-screen flex flex-col antialiased selection:bg-[#E5C158]/30 selection:text-[#1A1815]">
         <Navbar />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <ErrorBoundary>{children}</ErrorBoundary>
         </main>
-        <footer className="border-t border-white/10 py-6 mt-12 text-center text-xs text-slate-500">
+        <footer className="border-t border-[#D4AF37]/20 py-8 mt-16 text-center text-xs text-[#8C847A] bg-white/60 backdrop-blur-md">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 px-6">
-            <p>© 2026 NexusMap Graph Intelligence. Built for Wexa AI Assessment.</p>
-            <div className="flex items-center gap-4 text-slate-400">
-              <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
-                CognoDB Managed Graph
+            <p>© 2026 NexusMap Executive Graph Intelligence. Built for Wexa AI Assessment.</p>
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 rounded-full bg-[#1A1815] text-[#E5C158] border border-[#D4AF37]/30 font-mono font-bold text-[11px]">
+                CognoDB Cloud Engine
               </span>
-              <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">
+              <span className="px-3 py-1 rounded-full bg-[#F3EFE6] text-[#5A544A] border border-[#D4AF37]/20 font-mono font-semibold text-[11px]">
                 Next.js 15 App Router
               </span>
             </div>
