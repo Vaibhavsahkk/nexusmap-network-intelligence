@@ -13,7 +13,7 @@ export async function getCompanyNetwork(companyId, limit = 20) {
            c.name AS company,
            ind.name AS industry
     ORDER BY degree ASC, p.name ASC
-    LIMIT $limit
+    LIMIT toInteger($limit)
   `;
 
   const records = await executeQuery(cypher, { companyId, limit: parseInt(limit, 10) });

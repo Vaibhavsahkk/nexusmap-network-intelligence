@@ -17,7 +17,7 @@ export async function searchNetwork(query, limit = 20) {
            mutualCount,
            maxStrength
     ORDER BY degree ASC, mutualCount DESC, maxStrength DESC, p.name ASC
-    LIMIT $limit
+    LIMIT toInteger($limit)
   `;
   
   const records = await executeQuery(cypher, { query, limit: parseInt(limit, 10) });
