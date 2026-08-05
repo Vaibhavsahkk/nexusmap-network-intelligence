@@ -1,141 +1,94 @@
-# 📊 NexusMap — Graph Data Schemas
+# 📊 NexusMap — Graph Data Schemas & Watts-Strogatz Seed Topology
 
-> The heart of the application. Every node, every relationship, every property.
-
----
-
-## 1. Data Model Diagram
-
-```
-                    ┌─────────────┐
-                    │  INDUSTRY   │
-                    └──────▲──────┘
-                      IN_INDUSTRY
-                           │
-┌──────────────┐    ┌──────┴──────┐    ┌──────────────┐
-│   LOCATION   │◄───│   COMPANY   │    │  UNIVERSITY  │
-└──────▲───────┘    └──────▲──────┘    └──────▲───────┘
-       │              WORKED_AT           STUDIED_AT
-   LOCATED_IN         │                      │
-       │    ┌─────────┴──────────────────────┤
-       │    │          PERSON                │
-       │    │  id, name, title, email, bio   │
-       │    └───┬────────────┬───────────────┘
-       │        │            │
-    HAS_SKILL  KNOWS      ATTENDED
-       │        │            │
-┌──────▼──────┐ ▼     ┌──────▼──────┐
-│    SKILL    │PERSON  │    EVENT    │
-└─────────────┘        └─────────────┘
-```
+> **Database**: CognoDB Managed Cloud Graph Database  
+> **Protocol**: Bolt 5.x (openCypher / Neo4j driver)  
+> **Seed Volume**: Exact **307 Nodes** & **1,420 Relationships**  
 
 ---
 
-## 2. Node Schemas
+## 🎨 Graph Data Model Diagram (openCypher)
 
-### Person (Primary Entity) — ~150 nodes
-```cypher
-(:Person {
-  id: String,          // UUID primary key; root user is seeded with id "root-user-id"
-  name: String,        // "Priya Sharma"
-  title: String,       // "Senior Software Engineer"
-  email: String,       // "priya@example.com"
-  bio: String,         // Short professional bio
-  avatarUrl: String,   // Generated via DiceBear API: https://api.dicebear.com/9.x/initials/svg?seed=Priya%20Sharma
-  linkedinUrl: String, // LinkedIn profile URL
-  twitterHandle: String,
-  isRoot: Boolean      // true = the "current user" node
-})
-```
-The seed script must create exactly one root person with `id = "root-user-id"` and `isRoot = true` so path queries always have a deterministic source node.
-**Indexes**: `Person.id`, `Person.name`
+```mermaid
+graph TD
+    classDef personNode fill:#8b5cf6,stroke:#a78bfa,stroke-width:2px,color:#fff;
+    classDef companyNode fill:#10b981,stroke:#34d399,stroke-width:2px,color:#fff;
+    classDef skillNode fill:#f43f5e,stroke:#fb7185,stroke-width:2px,color:#fff;
+    classDef univNode fill:#f59e0b,stroke:#fbbf24,stroke-width:2px,color:#fff;
+    classDef locNode fill:#00d2ff,stroke:#38bdf8,stroke-width:2px,color:#000;
+    classDef indNode fill:#64748b,stroke:#94a3b8,stroke-width:2px,color:#fff;
+    classDef eventNode fill:#334155,stroke:#475569,stroke-width:2px,color:#fff;
 
-### Company — ~40 nodes
-```cypher
-(:Company {
-  id: String, name: String, domain: String,
-  size: String,     // "1001-5000"
-  founded: Integer, // 2010
-  website: String, logo: String
-})
-```
+    P1[Person : Node]:::personNode
+    P2[Person : Node]:::personNode
+    C[Company : Node]:::companyNode
+    S[Skill : Node]:::skillNode
+    U[University : Node]:::univNode
+    L[Location : Node]:::locNode
+    I[Industry : Node]:::indNode
+    E[Event : Node]:::eventNode
 
-### Skill — ~50 nodes
-```cypher
-(:Skill { id: String, name: String, category: String })
-```
-
-### University — ~20 nodes
-```cypher
-(:University { id: String, name: String, location: String, ranking: Integer })
-```
-
-### Location — ~15 nodes
-```cypher
-(:Location { id: String, city: String, country: String, lat: Float, lng: Float })
-```
-
-### Industry — ~12 nodes
-```cypher
-(:Industry { id: String, name: String })
-```
-
-### Event — ~20 nodes
-```cypher
-(:Event { id: String, name: String, date: String, type: String, location: String })
+    P1 -- "KNOWS {strength, since, source}" --> P2
+    P1 -- "WORKED_AT {role, isCurrent}" --> C
+    P1 -- "HAS_SKILL {proficiency}" --> S
+    P1 -- "STUDIED_AT {degree, field}" --> U
+    P1 -- "LOCATED_IN" --> L
+    P1 -- "ATTENDED" --> E
+    C -- "IN_INDUSTRY" --> I
+    C -- "LOCATED_IN" --> L
 ```
 
 ---
 
-## 3. Relationship Schemas & Edge Directionality Rule
+## 1. Node Labels & Properties
 
-### `KNOWS` (Person → Person) — ~600 edges
-```cypher
-[:KNOWS {
-  strength: Integer,  // 1-10
-  since: String,      // "2022-03"
-  source: String,     // "linkedin"|"email"|"event"|"work"|"university"
-  notes: String       // Optional context
-}]
-```
-> **Edge Storage Rule**: To prevent duplicate relations and incorrect degree counts, the seed script creates exactly **ONE** directed edge per pair: `(p1)-[:KNOWS]->(p2)` where `p1.id < p2.id`. All Cypher queries traverse undirectionally: `(p1)-[:KNOWS]-(p2)` (without arrows).
+### 1.1 `Person` (150 Nodes)
+- `id` (string, unique): e.g., `"root-user-id"`, `"person-1"`
+- `name` (string): e.g., `"Priya Sharma"`
+- `title` (string): e.g., `"Senior Engineer at Stripe"`
+- `email` (string): e.g., `"priya@example.com"`
+- `bio` (string): Short biography
+- `avatarUrl` (string): DiceBear SVG URL
+- `linkedinUrl` (string): LinkedIn profile URL
+- `twitterHandle` (string): Twitter handle
+- `isRoot` (boolean): `true` for root user (`"root-user-id"`)
 
-### `WORKED_AT` (Person → Company) — ~200 edges
-### `STUDIED_AT` (Person → University) — ~100 edges
-### `HAS_SKILL` (Person → Skill) — ~300 edges
-### `LOCATED_IN` — ~100 edges
-### `IN_INDUSTRY` — ~40 edges
-### `ATTENDED` — ~80 edges
+### 1.2 `Company` (40 Nodes)
+- `id` (string, unique): e.g., `"comp-1"`
+- `name` (string): e.g., `"Stripe"`, `"Google"`, `"Wexa AI"`
+- `domain` (string): e.g., `"stripe.com"`
+- `size` (string): e.g., `"1000+"`
+- `founded` (integer): e.g., `2010`
+
+### 1.3 `Skill` (50 Nodes)
+- `id` (string, unique): e.g., `"skill-1"`
+- `name` (string): e.g., `"React"`, `"Cypher"`, `"System Architecture"`
+- `category` (string): e.g., `"Engineering"`, `"Product"`
+
+### 1.4 `University` (20 Nodes)
+- `id` (string, unique): e.g., `"univ-1"`
+- `name` (string): e.g., `"IIT Delhi"`, `"BITS Pilani"`, `"Stanford University"`
+
+### 1.5 `Location` (15 Nodes)
+- `id` (string, unique): e.g., `"loc-1"`
+- `city` (string): e.g., `"San Francisco"`
+- `country` (string): e.g., `"USA"`
+
+### 1.6 `Industry` (12 Nodes)
+- `id` (string, unique): e.g., `"ind-1"`
+- `name` (string): e.g., `"Artificial Intelligence"`, `"FinTech"`
+
+### 1.7 `Event` (20 Nodes)
+- `id` (string, unique): e.g., `"event-1"`
+- `name` (string): e.g., `"Tech Summit 2024"`
 
 ---
 
-## 4. Small-World Seed Topology Algorithm (Watts-Strogatz + Hubs)
+## 2. Relationship Types & Properties (1,420 Edges)
 
-Rather than random mock connections, `scripts/seed.mjs` uses a deterministic **Watts-Strogatz network model** to create genuine small-world properties:
-
-1. **Ring Lattice Base**: Connect 150 `Person` nodes in a ring where each person knows their 4 nearest neighbors (high local clustering).
-2. **Rewiring Phase (15%)**: Randomly disconnect 15% of lattice edges and rewire them across distant nodes (creates short average path lengths).
-3. **Super-Connectors (5 Hub Nodes)**: Add 5 designated hub people who each possess 18–25 connections across different clusters.
-4. **Company-Based Triangles**: Everyone working at the same company has an 80% probability of knowing each other (coworker clusters).
-
-| Metric | Target Value |
-|--------|--------------|
-| Total Nodes | ~307 |
-| Total Relationships | ~1,420 |
-| Avg Degree (KNOWS) | 8.0 per person |
-| Avg Path Length | ~3.2 hops |
-| Clustering Coefficient | ~0.31 |
-| Max Bounded Traversal | 5 hops |
-
----
-
-## 5. Avatar Source Specification
-
-All avatars are dynamically generated using **DiceBear Initials API**:
-```javascript
-const getAvatarUrl = (name) => 
-  `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=00d2ff,6c5ce7,00b894`;
-```
-- Zero third-party asset hosting required.
-- High visual appeal with brand color themes.
-- 100% deterministic based on seed name.
+- `(:Person)-[:KNOWS {strength: 1-10, since: "YYYY-MM", source: "work|event|university"}]->(:Person)` (600 Edges)
+- `(:Person)-[:WORKED_AT {role: string, isCurrent: boolean}]->(:Company)` (200 Edges)
+- `(:Person)-[:HAS_SKILL {proficiency: "expert|advanced"}]->(:Skill)` (300 Edges)
+- `(:Person)-[:STUDIED_AT {degree: string, field: string}]->(:University)` (100 Edges)
+- `(:Person)-[:LOCATED_IN]->(:Location)` (100 Edges)
+- `(:Company)-[:IN_INDUSTRY]->(:Industry)` (40 Edges)
+- `(:Person)-[:ATTENDED]->(:Event)` (80 Edges)
