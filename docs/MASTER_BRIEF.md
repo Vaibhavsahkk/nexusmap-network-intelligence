@@ -1,9 +1,9 @@
-# 🧭 NexusMap — Master Brief & Strategic Alignment
+# 🧭 NexusMap Master Brief & Strategic Alignment
 
 > **Project Name**: NexusMap  
 > **Tagline**: Professional Network Intelligence Powered by Graph Context  
 > **Target Platform**: Next.js 15 + CognoDB Cloud  
-> **Take-Home Alignment**: Wexa AI Technical Assessment  
+> **Target Architecture**: Commercial Graph SaaS Platform  
 
 ---
 
@@ -18,11 +18,10 @@ Unlike traditional CRUD social networks, NexusMap answers complex contextual que
 
 ---
 
-## 2. Why NexusMap Perfect Aligns with Wexa AI
+## 2. Product Mission & Value Proposition
 
-Wexa AI builds **Context Governance Platforms** that connect enterprise tools, APIs, and data into unified knowledge graphs. 
+NexusMap builds a **Context Governance Platform** that connects professional relationships, companies, and skills into a unified knowledge graph:
 
-NexusMap demonstrates the exact same core value proposition:
 1. **Context over Records**: A person isn't just a row in a SQL database; they are defined by their position in a graph (connections, shared history, skills, companies).
 2. **Graph-Native Queries**: Leverages openCypher for multi-hop graph traversals (`1..3` hops for search, `1..5` hops for shortest path) that are awkward and slow in SQL.
 3. **Enterprise Relevance**: Mirrors real B2B sales development, talent acquisition, and executive networking workflows.
@@ -41,7 +40,7 @@ NexusMap demonstrates the exact same core value proposition:
 
 ---
 
-## 4. Key Differentiators (Why This Submission Stands Out)
+## 4. Key Differentiators
 
 1. **Not a generic social network clone**: Focuses on **intelligence and path discovery**, not post feeds or messaging.
 2. **Deterministic Watts-Strogatz topology**: Realistic small-world dataset (307 nodes, 1,420 edges) with genuine clustering and hub nodes.
