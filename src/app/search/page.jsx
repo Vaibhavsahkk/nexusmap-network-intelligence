@@ -22,49 +22,51 @@ export default async function SearchPage({ searchParams }) {
   return (
     <div className="space-y-8">
       {/* Header & Search Input */}
-      <div className="glass-card p-8 rounded-3xl border border-white/10 text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">
-          <Search className="w-3.5 h-3.5" />
-          <span>4-Tier Multi-Hop Graph Search</span>
+      <div className="glass-card p-10 rounded-3xl border border-[#D4AF37]/30 text-center space-y-5 bg-gradient-to-b from-white to-[#F8F5EE] shadow-xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1815] border border-[#D4AF37]/40 text-[#E5C158] text-xs font-bold shadow-sm">
+          <Search className="w-3.5 h-3.5 text-[#E5C158]" />
+          <span>4-Tier Multi-Hop Graph Search Engine</span>
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-100">
-          Find Anyone in Your Extended Network
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1A1815]">
+          Discover Anyone Across Your <span className="font-serif-title text-[#C59B27] font-normal italic">3-Hop Network</span>
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-          Ranked strictly by connection degree (1st → 3rd), mutual connection count, and relationship strength.
+        <p className="text-sm font-medium text-[#5A544A] max-w-xl mx-auto">
+          Deterministic 4-tier openCypher ranking: Connection Degree (1st → 3rd) $\rightarrow$ Mutual Count $\rightarrow$ Relationship Strength.
         </p>
 
-        <div className="pt-2">
-          <SearchBar initialQuery={query} placeholder="Try searching 'Priya', 'Stripe', 'React', 'Engineer'..." />
+        <div className="pt-2 max-w-2xl mx-auto">
+          <SearchBar initialQuery={query} placeholder="Try searching 'Engineer', 'Stripe', 'React', or 'Priya'..." />
         </div>
       </div>
 
       {/* Results Header */}
       {query.trim() && (
         <div className="flex items-center justify-between px-2">
-          <h2 className="text-sm font-semibold text-slate-300">
-            Found <span className="text-cyan-400">{results.length}</span> results for &quot;{query}&quot;
+          <h2 className="text-sm font-bold text-[#1A1815]">
+            Found <span className="text-[#C59B27] font-extrabold">{results.length}</span> executive results for &quot;{query}&quot;
           </h2>
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Ranked by Degree & Mutuals</span>
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#8C847A]">
+            <Sparkles className="w-3.5 h-3.5 text-[#C59B27]" />
+            <span>Ranked strictly by openCypher degree math</span>
           </div>
         </div>
       )}
 
       {/* Search Result Grid */}
       {!query.trim() ? (
-        <div className="glass-card p-12 rounded-3xl border border-white/5 text-center text-slate-400 space-y-3 max-w-lg mx-auto">
-          <Search className="w-10 h-10 text-cyan-500/40 mx-auto" />
-          <h3 className="text-base font-semibold text-slate-200">Start Searching Your Graph</h3>
-          <p className="text-xs text-slate-400">
-            Type any name, title, skill, or company in the search box above to traverse up to 3 hops.
+        <div className="glass-card p-12 rounded-3xl border border-[#D4AF37]/20 text-center text-[#5A544A] space-y-4 max-w-lg mx-auto bg-white/90 shadow-md">
+          <div className="w-12 h-12 rounded-2xl bg-[#1A1815] flex items-center justify-center text-[#E5C158] mx-auto border border-[#D4AF37]/40 shadow-sm">
+            <Search className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-bold text-[#1A1815]">Explore Your 307 Network Nodes</h3>
+          <p className="text-xs text-[#8C847A] leading-relaxed">
+            Type any name, job title, skill, or company name above to traverse up to 3 degrees of separation in CognoDB.
           </p>
         </div>
       ) : results.length === 0 ? (
         <EmptyState
-          title={`No graph matches for "${query}"`}
-          description="Try searching for another term like 'Engineer', 'React', 'Stripe', or 'Priya'."
+          title={`No network matches for "${query}"`}
+          description="Try searching for another term like 'Engineer', 'React', 'Stripe', or 'GraphQL'."
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

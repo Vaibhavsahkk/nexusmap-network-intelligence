@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
   let stats = { directCount: 0, reach2Hops: 0, totalReachable: 0 };
-  let graphData = { nodes: [], edges: [] };
+  let graphData = { nodes: [], links: [] };
 
   try {
     stats = await getNetworkStats();
@@ -20,51 +20,51 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Hero Header */}
-      <div className="glass-card p-8 sm:p-10 rounded-3xl border border-white/10 relative overflow-hidden text-center space-y-6">
-        <div className="absolute -top-24 -left-24 w-60 h-60 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="glass-card p-10 sm:p-14 rounded-3xl border border-[#D4AF37]/30 relative overflow-hidden text-center space-y-7 bg-gradient-to-b from-white to-[#F8F5EE] shadow-2xl">
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-[#E5C158]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-[#7C3AED]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Graph Context Engine Active</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1815] border border-[#D4AF37]/40 text-[#E5C158] text-xs font-bold shadow-md">
+          <Sparkles className="w-3.5 h-3.5 text-[#E5C158]" />
+          <span>Executive Network Intelligence Engine</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-100 max-w-3xl mx-auto leading-tight">
-          Navigate Your Professional Network in <span className="bg-gradient-to-r from-cyan-400 via-purple-300 to-emerald-400 bg-clip-text text-transparent">Multi-Dimensional Graph Context</span>
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1A1815] max-w-4xl mx-auto leading-[1.15]">
+          Navigate Your Professional Universe in <span className="font-serif-title text-[#C59B27] font-normal italic">Graph Context</span>
         </h1>
 
-        <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Discover shortest warm introduction paths, explore company coworker clusters, and unlock hidden connections powered by CognoDB graph traversals.
+        <p className="text-[#5A544A] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          Discover bounded warm introduction chains, map executive relationships, and filter 307 nodes across multi-hop small-world graph topology.
         </p>
 
         {/* Global Search Bar */}
-        <div className="pt-2">
-          <SearchBar placeholder="Search 307 nodes by name, skill (e.g. React), or company (e.g. Stripe)..." />
+        <div className="pt-3 max-w-3xl mx-auto">
+          <SearchBar placeholder="Search 307 graph nodes by name, skill (e.g. React), or company (e.g. Stripe)..." />
         </div>
       </div>
 
       {/* Analytics Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          label="Direct 1st-Degree Contacts"
+          label="Direct 1st-Degree Network"
           value={stats.directCount || 18}
-          subtitle="People you know directly"
+          subtitle="Direct executive connections"
           icon={Users}
-          color="emerald"
+          color="gold"
         />
         <StatCard
           label="2nd-Degree Network Reach"
           value={stats.reach2Hops || 95}
-          subtitle="Friends of friends reachable"
+          subtitle="Reachable mutual introductions"
           icon={Share2}
-          color="cyan"
+          color="emerald"
         />
         <StatCard
-          label="Total Reachable Network"
+          label="Total Reachable Graph"
           value={stats.totalReachable || 142}
-          subtitle="Reachable within 3 hops"
+          subtitle="3-hop bounded graph coverage"
           icon={GitFork}
           color="purple"
         />
@@ -72,21 +72,21 @@ export default async function DashboardPage() {
 
       {/* Interactive WebGL/Canvas Force-Directed Graph */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-1">
           <div>
-            <h2 className="text-xl font-bold text-slate-100">Live Network Subgraph Canvas</h2>
-            <p className="text-xs text-slate-400">Click any node to open profile or drag to reposition</p>
+            <h2 className="text-2xl font-bold text-[#1A1815]">Live CognoDB Network Graph</h2>
+            <p className="text-xs font-medium text-[#8C847A]">Click any node to open profile or drag to inspect relationships</p>
           </div>
           <Link
             href="/search?q=a"
-            className="flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 font-semibold"
+            className="flex items-center gap-2 text-xs font-bold text-[#1A1815] hover:text-[#C59B27] transition-colors px-4 py-2 rounded-xl bg-white border border-[#D4AF37]/30 shadow-sm"
           >
-            <span>Explore All Nodes</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Explore All 307 Nodes</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#C59B27]" />
           </Link>
         </div>
 
-        <NetworkGraph data={graphData} height={520} />
+        <NetworkGraph data={graphData} height={540} />
       </div>
     </div>
   );
