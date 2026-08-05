@@ -34,3 +34,16 @@ scripts/fix-*.mjs
 scripts/take-*.mjs
 scripts/test-live-*.mjs
 
+# internal documentation (local only)
+docs/DATA_SCHEMAS.md
+docs/DEPLOYMENT.md
+docs/MASTER_BRIEF.md
+docs/PRD.md
+docs/PROJECT_STRUCTURE.md
+docs/SETUP_GUIDE.md
+docs/TASKS.md
+docs/TECH_STACK.md
+docs/UI_UX_DESIGN.md
+docs/WHY_GRAPH_DB.md
+
+
