@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { SkeletonGraph } from '../ui/Skeleton';
@@ -20,14 +20,30 @@ export default function NetworkGraph({ data, height = 520 }) {
     setMounted(true);
   }, []);
 
-  if (!mounted || !data || !data.nodes || data.nodes.length === 0) {
+  // Safely construct & sanitize graph payload for d3-force
+  const graphPayload = useMemo(() => {
+    if (!data || !data.nodes || !Array.isArray(data.nodes)) {
+      return { nodes: [], links: [] };
+    }
+
+    const nodes = data.nodes.map((n) => ({ ...n }));
+    const nodeIds = new Set(nodes.map((n) => n.id));
+
+    const rawLinks = data.links || data.edges || [];
+    const links = rawLinks
+      .filter((l) => {
+        const sourceId = typeof l.source === 'object' ? l.source?.id : l.source;
+        const targetId = typeof l.target === 'object' ? l.target?.id : l.target;
+        return nodeIds.has(sourceId) && nodeIds.has(targetId);
+      })
+      .map((l) => ({ ...l }));
+
+    return { nodes, links };
+  }, [data]);
+
+  if (!mounted || graphPayload.nodes.length === 0) {
     return <SkeletonGraph />;
   }
-
-  const graphPayload = {
-    nodes: data.nodes || [],
-    links: data.links || data.edges || [],
-  };
 
   const handleNodeClick = (node) => {
     if (node && node.id) {
@@ -50,7 +66,7 @@ export default function NetworkGraph({ data, height = 520 }) {
         nodeRelSize={6}
         nodeVal={(node) => (node.isRoot ? 12 : 6)}
         nodeColor={(node) =>
-          node.isRoot ? '#00d2ff' : node.id.includes('person') ? '#8b5cf6' : '#10b981'
+          node.isRoot ? '#00d2ff' : node.id?.includes('person') ? '#8b5cf6' : '#10b981'
         }
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.name || node.id;
@@ -67,7 +83,7 @@ export default function NetworkGraph({ data, height = 520 }) {
           ctx.shadowBlur = 0; // reset
 
           // Draw Label Text below node if zoomed in
-          if (globalScale > 0.8) {
+          if (globalScale > 0.8 && label) {
             ctx.font = `${fontSize}px Inter, sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
