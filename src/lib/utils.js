@@ -7,6 +7,7 @@ export function getAvatarUrl(name) {
 }
 
 export function formatDegreeLabel(degree) {
+  if (degree === 0) return 'You (Root User)';
   if (degree === 1) return '1st Degree (Direct)';
   if (degree === 2) return '2nd Degree (Mutual)';
   if (degree === 3) return '3rd Degree (Network)';
