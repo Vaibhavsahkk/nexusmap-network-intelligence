@@ -1,0 +1,27 @@
+{
+  "name": "nexusmap",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node scripts/seed.mjs",
+    "clear": "node scripts/clear.mjs",
+    "verify": "node scripts/verify.mjs",
+    "test": "node --test scripts/test-queries.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "lucide-react": "^0.460.0",
+    "neo4j-driver": "^5.27.0",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-force-graph-2d": "^1.26.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0"
+  }
+}
