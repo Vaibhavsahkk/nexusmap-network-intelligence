@@ -25,3 +25,12 @@ yarn-error.log*
 # local environment secret files (NEVER commit)
 .env*.local
 .env.local
+
+# local presentation script & internal dev tools (local only)
+DEMO_SCRIPT.md
+scripts/capture-*.mjs
+scripts/crop-*.mjs
+scripts/fix-*.mjs
+scripts/take-*.mjs
+scripts/test-live-*.mjs
+
