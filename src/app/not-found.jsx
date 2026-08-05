@@ -8,7 +8,7 @@ export default function NotFound() {
         <Search className="w-8 h-8" />
       </div>
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-[#1A1815]">404 — Graph Node Not Found</h2>
+        <h2 className="text-2xl font-bold text-[#1A1815]">404 Graph Node Not Found</h2>
         <p className="text-xs font-medium text-[#8C847A]">
           The requested graph node or page does not exist in your CognoDB dataset.
         </p>

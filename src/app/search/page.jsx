@@ -31,7 +31,7 @@ export default async function SearchPage({ searchParams }) {
           Discover Anyone Across Your <span className="font-serif-title text-[#C59B27] font-normal italic">3-Hop Network</span>
         </h1>
         <p className="text-sm font-medium text-[#5A544A] max-w-xl mx-auto">
-          Deterministic 4-tier openCypher ranking: Connection Degree (1st → 3rd) $\rightarrow$ Mutual Count $\rightarrow$ Relationship Strength.
+          Deterministic 4-tier openCypher ranking: Connection Degree (1st to 3rd) → Mutual Count → Relationship Strength.
         </p>
 
         <div className="pt-2 max-w-2xl mx-auto">

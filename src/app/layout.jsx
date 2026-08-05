@@ -3,7 +3,7 @@ import Navbar from '@/components/ui/Navbar.jsx';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.jsx';
 
 export const metadata = {
-  title: 'NexusMap — Executive Network Intelligence',
+  title: 'NexusMap Executive Network Intelligence',
   description:
     'Discover warm introduction paths, explore executive company networks, and navigate multi-dimensional relationships powered by CognoDB graph intelligence.',
   keywords: ['Graph Database', 'CognoDB', 'Network Intelligence', 'Warm Introduction Path', 'Next.js 15'],
@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         </main>
         <footer className="border-t border-[#D4AF37]/20 py-8 mt-16 text-center text-xs text-[#8C847A] bg-white/60 backdrop-blur-md">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 px-6">
-            <p>© 2026 NexusMap Executive Graph Intelligence. Built for Wexa AI Assessment.</p>
+            <p>© 2026 NexusMap Executive Graph Intelligence.</p>
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-full bg-[#1A1815] text-[#E5C158] border border-[#D4AF37]/30 font-mono font-bold text-[11px]">
                 CognoDB Cloud Engine

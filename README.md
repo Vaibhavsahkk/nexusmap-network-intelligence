@@ -1,7 +1,6 @@
-# 🧭 NexusMap — Professional Network Intelligence
+# 🧭 NexusMap Executive Network Intelligence
 
 > **Live Demo**: `http://localhost:3000` *(or production deployment)*  
-> **Built For**: Wexa AI Technical Assessment  
 > **Database Engine**: CognoDB Cloud (`bolt+s://db-52b291f3.databases.cognodb.com`)  
 > **Tech Stack**: Next.js 15 (App Router) + React 19 + `neo4j-driver` (Bolt 5.x) + WebGL Canvas  
 
