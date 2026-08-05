@@ -5,13 +5,12 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { SkeletonGraph } from '../ui/Skeleton';
 
-// Dynamic import with ssr: false to avoid canvas hydration issues
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), {
   ssr: false,
   loading: () => <SkeletonGraph />,
 });
 
-export default function NetworkGraph({ data, height = 540 }) {
+export default function NetworkGraph({ data, height = 560 }) {
   const [mounted, setMounted] = useState(false);
   const graphRef = useRef(null);
   const router = useRouter();
@@ -20,7 +19,6 @@ export default function NetworkGraph({ data, height = 540 }) {
     setMounted(true);
   }, []);
 
-  // Safely construct & sanitize graph payload for d3-force
   const graphPayload = useMemo(() => {
     if (!data || !data.nodes || !Array.isArray(data.nodes)) {
       return { nodes: [], links: [] };
@@ -52,8 +50,8 @@ export default function NetworkGraph({ data, height = 540 }) {
   };
 
   return (
-    <div className="glass-panel w-full rounded-3xl overflow-hidden border border-[#D4AF37]/30 relative shadow-2xl bg-[#FAF7F2]">
-      <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-[#D4AF37]/30 text-xs font-semibold text-[#1A1815] flex items-center gap-2.5 shadow-md">
+    <div className="glass-panel w-full rounded-3xl overflow-hidden border border-[#D4AF37]/35 relative shadow-2xl bg-[#FAF7F2]">
+      <div className="absolute top-5 left-5 z-10 bg-white/95 backdrop-blur-md px-4.5 py-2.5 rounded-2xl border border-[#D4AF37]/35 text-xs font-bold text-[#1A1815] flex items-center gap-3 shadow-lg tracking-wide">
         <span className="w-2.5 h-2.5 rounded-full bg-[#C59B27] animate-pulse" />
         <span>Interactive CognoDB Network Canvas ({graphPayload.nodes.length} Nodes)</span>
       </div>
@@ -73,16 +71,14 @@ export default function NetworkGraph({ data, height = 540 }) {
           const fontSize = Math.max(10 / globalScale, 3.5);
           const radius = node.isRoot ? 9 : 5.5;
 
-          // Draw Glowing Champagne Gold Circle Node
           ctx.beginPath();
           ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
           ctx.fillStyle = node.isRoot ? '#1A1815' : '#C59B27';
           ctx.shadowColor = node.isRoot ? '#D4AF37' : '#C59B27';
           ctx.shadowBlur = node.isRoot ? 14 : 8;
           ctx.fill();
-          ctx.shadowBlur = 0; // reset
+          ctx.shadowBlur = 0;
 
-          // Inner Golden Dot for Root User
           if (node.isRoot) {
             ctx.beginPath();
             ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
@@ -90,7 +86,6 @@ export default function NetworkGraph({ data, height = 540 }) {
             ctx.fill();
           }
 
-          // Draw Label Text below node if zoomed in
           if (globalScale > 0.8 && label) {
             ctx.font = `600 ${fontSize}px "Plus Jakarta Sans", sans-serif`;
             ctx.textAlign = 'center';

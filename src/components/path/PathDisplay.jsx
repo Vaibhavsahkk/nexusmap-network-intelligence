@@ -7,8 +7,9 @@ import { ArrowRight, Zap, Calendar, Briefcase } from 'lucide-react';
 export default function PathDisplay({ pathData }) {
   if (!pathData || !pathData.found) {
     return (
-      <div className="glass-card p-10 rounded-3xl text-center text-[#5A544A] border border-[#D4AF37]/20 bg-[#F8F5EE]">
-        No warm connection path found within 5 degrees of separation.
+      <div className="glass-card p-12 rounded-3xl text-center text-[#5A544A] border border-[#D4AF37]/20 bg-[#F8F5EE] shadow-lg">
+        <h3 className="text-lg font-bold text-[#1A1815] mb-2">No Warm Path Found</h3>
+        <p className="text-sm text-[#8C847A] tracking-wide">No connection chain discovered within 5 degrees of separation for this node.</p>
       </div>
     );
   }
@@ -16,37 +17,37 @@ export default function PathDisplay({ pathData }) {
   const { people, connections, hops } = pathData;
 
   return (
-    <div className="glass-card p-8 sm:p-10 rounded-3xl border border-[#D4AF37]/30 shadow-2xl space-y-6 bg-gradient-to-b from-white to-[#F8F5EE]">
+    <div className="glass-card px-10 py-12 sm:px-12 sm:py-14 rounded-3xl border border-[#D4AF37]/30 shadow-2xl space-y-8 bg-gradient-to-b from-white to-[#F8F5EE]">
       {/* Path Header */}
-      <div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-5">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#1A1815] flex items-center justify-center text-[#E5C158] font-bold text-lg border border-[#D4AF37]/40 shadow-lg shadow-[#1A1815]/10">
+      <div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-6">
+        <div className="flex items-center gap-4.5">
+          <div className="w-13 h-13 rounded-2xl bg-[#1A1815] flex items-center justify-center text-[#E5C158] font-bold text-xl border border-[#D4AF37]/40 shadow-lg shadow-[#1A1815]/15">
             {hops}
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-[#1A1815]">
+          <div className="space-y-0.5">
+            <h2 className="text-2xl font-bold text-[#1A1815] tracking-tight">
               Warm Introduction Path ({hops} {hops === 1 ? 'Hop' : 'Hops'})
             </h2>
-            <p className="text-xs font-medium text-[#8C847A]">Shortest introduction chain discovered in CognoDB Graph</p>
+            <p className="text-xs font-medium text-[#8C847A] tracking-wide">Shortest introduction chain discovered in CognoDB Graph</p>
           </div>
         </div>
-        <span className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-[#D4AF37]/15 text-[#B38612] border border-[#D4AF37]/30">
+        <span className="px-4 py-1.5 text-xs font-bold tracking-wider uppercase font-mono rounded-full bg-[#D4AF37]/15 text-[#B38612] border border-[#D4AF37]/35 shadow-xs">
           Verified Graph Path
         </span>
       </div>
 
       {/* Path Step Chain */}
-      <div className="relative space-y-4">
+      <div className="relative space-y-6">
         {people.map((person, idx) => {
-          const conn = connections[idx]; // connection to NEXT person
+          const conn = connections[idx];
           const isLast = idx === people.length - 1;
 
           return (
-            <div key={person.id || idx} className="space-y-4">
+            <div key={person.id || idx} className="space-y-6">
               {/* Person Node Card */}
-              <div className="glass-panel p-5 rounded-2xl border border-[#D4AF37]/20 flex items-center justify-between hover:border-[#C59B27] transition-all bg-white/90 shadow-sm">
-                <div className="flex items-center gap-4">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#D4AF37]/50 shrink-0 shadow-sm">
+              <div className="glass-panel p-6 rounded-2xl border border-[#D4AF37]/25 flex items-center justify-between hover:border-[#C59B27] transition-all duration-300 bg-white/95 shadow-md hover:shadow-xl">
+                <div className="flex items-center gap-4.5">
+                  <div className="relative w-13 h-13 rounded-2xl overflow-hidden border-2 border-[#D4AF37]/50 shrink-0 shadow-sm">
                     <Image
                       src={
                         person.avatar ||
@@ -58,26 +59,26 @@ export default function PathDisplay({ pathData }) {
                       unoptimized
                     />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-[#1A1815]">{person.name}</h4>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2.5">
+                      <h4 className="font-extrabold text-base text-[#1A1815] tracking-tight">{person.name}</h4>
                       {idx === 0 && (
-                        <span className="px-2.5 py-0.5 text-[10px] font-bold bg-[#0D8A58]/15 text-[#0D8A58] border border-[#0D8A58]/30 rounded">
+                        <span className="px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider uppercase font-mono bg-[#0D8A58]/15 text-[#0D8A58] border border-[#0D8A58]/35 rounded-md">
                           YOU (ROOT USER)
                         </span>
                       )}
                       {isLast && (
-                        <span className="px-2.5 py-0.5 text-[10px] font-bold bg-[#C59B27]/15 text-[#B38612] border border-[#D4AF37]/30 rounded">
+                        <span className="px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider uppercase font-mono bg-[#C59B27]/15 text-[#B38612] border border-[#D4AF37]/35 rounded-md">
                           TARGET NODE
                         </span>
                       )}
                     </div>
-                    <p className="text-xs font-medium text-[#5A544A]">{person.title}</p>
+                    <p className="text-xs font-medium text-[#5A544A] tracking-wide">{person.title}</p>
                   </div>
                 </div>
                 <Link
                   href={`/person/${person.id}`}
-                  className="text-xs text-[#1A1815] hover:text-[#C59B27] font-bold px-3.5 py-2 rounded-xl bg-[#F3EFE6] hover:bg-[#EAE4D7] transition-all border border-[#D4AF37]/20"
+                  className="text-xs text-[#1A1815] hover:text-[#C59B27] font-bold tracking-wider uppercase px-4 py-2.5 rounded-xl bg-[#F3EFE6] hover:bg-[#EAE4D7] transition-all border border-[#D4AF37]/25 shadow-xs"
                 >
                   View Profile
                 </Link>
@@ -85,8 +86,8 @@ export default function PathDisplay({ pathData }) {
 
               {/* Hop Relationship Edge Card */}
               {!isLast && conn && (
-                <div className="flex items-center justify-center my-3">
-                  <div className="px-5 py-2.5 rounded-2xl bg-[#1A1815] border border-[#D4AF37]/40 flex items-center gap-3.5 text-xs font-semibold text-[#E5C158] shadow-lg shadow-[#1A1815]/10">
+                <div className="flex items-center justify-center my-4">
+                  <div className="px-6 py-3 rounded-2xl bg-[#1A1815] border border-[#D4AF37]/40 flex items-center gap-4 text-xs font-semibold text-[#E5C158] shadow-xl shadow-[#1A1815]/15 tracking-wide">
                     <div className="flex items-center gap-1.5 text-[#E5C158]">
                       <Zap className="w-4 h-4 text-[#E5C158]" />
                       <span>Strength {conn.strength}/10</span>

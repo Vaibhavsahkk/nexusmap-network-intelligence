@@ -8,19 +8,19 @@ export default function StatCard({ label, value, icon: Icon, color = 'gold', sub
   const style = colorMap[color] || colorMap.gold;
 
   return (
-    <div className="glass-card p-6 rounded-2xl border border-[#D4AF37]/20 relative overflow-hidden group bg-gradient-to-b from-white/90 to-[#F8F5EE]/80 shadow-lg shadow-[#3D3528]/5">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#8C847A]">{label}</span>
+    <div className="glass-card px-7 py-8 rounded-2xl border border-[#D4AF37]/20 relative overflow-hidden group bg-gradient-to-b from-white/90 to-[#F8F5EE]/80 shadow-lg shadow-[#3D3528]/5">
+      <div className="flex items-center justify-between mb-5">
+        <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#8C847A]">{label}</span>
         {Icon && (
-          <div className={`p-2.5 rounded-xl bg-gradient-to-b border ${style}`}>
-            <Icon className="w-4 h-4" />
+          <div className={`p-3 rounded-xl bg-gradient-to-b border ${style}`}>
+            <Icon className="w-5 h-5" />
           </div>
         )}
       </div>
-      <div className="text-3xl font-extrabold text-[#1A1815] tracking-tight mb-1 group-hover:scale-105 transition-transform origin-left">
+      <div className="text-4xl font-extrabold text-[#1A1815] tracking-tight mb-2 group-hover:scale-105 transition-transform duration-300 origin-left">
         {value}
       </div>
-      {subtitle && <p className="text-xs font-medium text-[#5A544A]">{subtitle}</p>}
+      {subtitle && <p className="text-[13px] font-medium text-[#5A544A] tracking-wide">{subtitle}</p>}
     </div>
   );
 }

@@ -25,9 +25,9 @@ export default function SearchBar({ initialQuery = '', placeholder = 'Search 307
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
+    <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
       <div className="relative flex items-center w-full">
-        <div className="absolute left-4 text-[#C59B27] pointer-events-none z-10">
+        <div className="absolute left-5 text-[#C59B27] pointer-events-none z-10 flex items-center justify-center">
           {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
         </div>
         <input
@@ -35,20 +35,21 @@ export default function SearchBar({ initialQuery = '', placeholder = 'Search 307
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-12 pr-28 py-4 rounded-2xl bg-white/90 border border-[#D4AF37]/30 focus:border-[#C59B27] focus:ring-4 focus:ring-[#D4AF37]/15 text-[#1A1815] placeholder-[#8C847A] text-sm shadow-xl shadow-[#3D3528]/5 transition-all outline-none"
+          className="w-full pl-14 pr-32 py-4.5 rounded-2xl bg-white/95 border border-[#D4AF37]/35 focus:border-[#C59B27] focus:ring-4 focus:ring-[#D4AF37]/20 text-[#1A1815] placeholder-[#8C847A] text-[15px] font-medium leading-relaxed tracking-wide shadow-xl shadow-[#3D3528]/8 transition-all duration-300 outline-none"
         />
         {query && (
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-24 text-[#8C847A] hover:text-[#1A1815] p-1 z-10"
+            className="absolute right-28 text-[#8C847A] hover:text-[#1A1815] p-1.5 rounded-lg hover:bg-[#F3EFE6] transition-colors z-10"
+            title="Clear text"
           >
             <X className="w-4 h-4" />
           </button>
         )}
         <button
           type="submit"
-          className="absolute right-2.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#1A1815] to-[#3D3528] hover:from-[#2A2621] hover:to-[#4D4333] text-[#E5C158] text-xs font-bold border border-[#D4AF37]/30 shadow-md shadow-[#1A1815]/10 transition-all z-10"
+          className="absolute right-3 px-6 py-3 rounded-xl bg-gradient-to-r from-[#1A1815] to-[#3D3528] hover:from-[#2A2621] hover:to-[#4D4333] text-[#E5C158] text-xs font-bold tracking-widest uppercase border border-[#D4AF37]/40 shadow-md shadow-[#1A1815]/15 transition-all duration-200 z-10"
         >
           Search
         </button>
