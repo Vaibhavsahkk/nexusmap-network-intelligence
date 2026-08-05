@@ -6,6 +6,38 @@
 
 ---
 
+## 🖼️ Application Interface & Feature Showcase
+
+The NexusMap platform features a bespoke **Luxury Editorial Cream & Champagne Gold** UI design system built for executive intelligence, visual graph traversal, and warm path discovery:
+
+### 1. 📊 Executive Dashboard & WebGL Network Canvas
+*Interactive WebGL force-directed graph canvas rendering 307 nodes with 1st, 2nd, and 3rd degree connection stats.*
+
+![NexusMap Executive Dashboard & WebGL Network Canvas](public/screenshots/dashboard.png)
+
+---
+
+### 2. 🔍 4-Tier Multi-Hop Graph Search Engine
+*Multi-hop network search (`1..3` degrees) ranked deterministically: Degree ASC → Mutuals DESC → Strength DESC → Name ASC.*
+
+![NexusMap 4-Tier Multi-Hop Search Engine](public/screenshots/search.png)
+
+---
+
+### 3. ⚡ Warm Introduction Path Finder
+*Bounded shortest-path algorithm (`1..5` hops) discovering verified intro paths to target executive nodes.*
+
+![NexusMap Warm Introduction Path Finder](public/screenshots/path.png)
+
+---
+
+### 4. 👤 Executive Node Profile & Relationship Context
+*Comprehensive graph node profile displaying company history, verified skills, and direct relationship metrics.*
+
+![NexusMap Executive Node Profile](public/screenshots/profile.png)
+
+---
+
 ## 🎨 Graph Data Model Schema (CognoDB openCypher)
 
 NexusMap models professional networks as an interconnected graph with **307 Nodes** and **1,420 Relationships** across 4 distinct enterprise domains:
